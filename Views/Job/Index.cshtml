@@ -1,0 +1,71 @@
+﻿@model _2022E_WebApp.Models.PaginatedJobViewModel;
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Index";
+}
+
+<h1>Our Jobs</h1>
+
+<p>
+    <a class="btn btn-primary"  asp-action="Create">Create New</a>
+  
+</p>
+<table class="table table-hover table-dark">
+    <thead class="table table-hover table-dark">
+        <tr>
+            <th>
+                ID
+            </th>
+
+            <th>
+               Title
+            </th>
+            <th>
+               Description
+            </th>
+            
+            <th>
+               Salary
+            </th>
+            <th>Action Item</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Data) {
+        <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Salary)
+            </td>
+                <td>
+                @Html.ActionLink("Edit", "Edit", new {  id=item.Id  }) |
+                @Html.ActionLink("Details", "Details", new { id=item.Id  }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<div>
+    <ul class="pagination">
+        @for(var i = 1; i<= Model.TotalPages; i++)
+        {
+            <li class="page-item @(i == Model.CurrentPage ? "active": "")">
+
+                <a asp-page ="/pagination" asp-route-currentpage="@i" class="page-link">@i</a>
+            </li>
+        }
+    </ul>
+</div>
